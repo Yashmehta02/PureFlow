@@ -1,0 +1,1134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PureFlow RO Store | Genuine RO Spare Parts, Pipes & Water Purifiers</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+    body { font-family: 'Inter', sans-serif; background-color: #f1f3f6; }
+    .line-clamp-2 {
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  </style>
+</head>
+<body class="text-slate-800 antialiased">
+
+  <!-- TOP HEADER (Flipkart-Style Clean Storefront) -->
+  <header class="bg-blue-700 text-white sticky top-0 z-40 shadow-md">
+    <div class="max-w-7xl mx-auto px-3 sm:px-6 py-3 flex flex-wrap items-center justify-between gap-3">
+      <!-- Brand Logo -->
+      <a href="#" onclick="resetFilters()" class="flex items-center gap-2.5 shrink-0">
+        <div class="bg-white text-blue-700 w-9 h-9 rounded-lg flex items-center justify-center font-extrabold text-xl shadow-sm">
+          <i class="fa-solid fa-droplet"></i>
+        </div>
+        <div>
+          <span class="font-extrabold text-lg sm:text-xl tracking-tight block leading-none">PureFlow RO</span>
+          <span class="text-[11px] text-amber-300 font-semibold italic">Genuine Spares &amp; Purifiers</span>
+        </div>
+      </a>
+
+      <!-- Search Bar -->
+      <div class="order-3 md:order-2 w-full md:flex-1 md:max-w-xl">
+        <div class="relative flex items-center bg-white rounded-md overflow-hidden shadow-sm">
+          <input
+            type="text"
+            id="searchInput"
+            oninput="renderProducts()"
+            placeholder="Search for RO pumps, filters, pipes, Kent, Aquaguard..."
+            class="w-full px-4 py-2 text-sm text-slate-800 focus:outline-none"
+          />
+          <button onclick="renderProducts()" class="px-4 py-2 text-blue-700 hover:bg-blue-50">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Right Actions: Track Order & Cart -->
+      <div class="order-2 md:order-3 flex items-center gap-3 sm:gap-5">
+        <button onclick="openTrackOrderModal()" class="text-xs sm:text-sm font-semibold hover:text-amber-300 flex items-center gap-1.5">
+          <i class="fa-solid fa-box-open"></i>
+          <span>My Orders</span>
+        </button>
+
+        <button onclick="toggleCart(true)" class="relative bg-blue-800 hover:bg-blue-900 px-3.5 py-2 rounded-md text-xs sm:text-sm font-bold flex items-center gap-2 transition">
+          <i class="fa-solid fa-cart-shopping text-base"></i>
+          <span>Cart</span>
+          <span id="cartBadge" class="bg-amber-400 text-slate-900 text-xs font-extrabold px-1.5 py-0.5 rounded-full">0</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Category Bar -->
+    <div class="bg-white text-slate-700 border-b border-slate-200 shadow-xs">
+      <div id="categoryTabs" class="max-w-7xl mx-auto px-3 sm:px-6 flex items-center gap-2 sm:gap-6 overflow-x-auto no-scrollbar py-2.5 text-xs sm:text-sm font-semibold">
+        <button onclick="selectCategory('All')" data-cat="All" class="cat-btn text-blue-700 border-b-2 border-blue-700 pb-1 whitespace-nowrap">All Products</button>
+        <button onclick="selectCategory('RO Pumps & Motors')" data-cat="RO Pumps & Motors" class="cat-btn hover:text-blue-700 pb-1 whitespace-nowrap">RO Pumps &amp; Motors</button>
+        <button onclick="selectCategory('Filters & Membranes')" data-cat="Filters & Membranes" class="cat-btn hover:text-blue-700 pb-1 whitespace-nowrap">Filters &amp; Membranes</button>
+        <button onclick="selectCategory('RO Pipes & Fittings')" data-cat="RO Pipes & Fittings" class="cat-btn hover:text-blue-700 pb-1 whitespace-nowrap">RO Pipes &amp; Fittings</button>
+        <button onclick="selectCategory('Electrical & Valves')" data-cat="Electrical & Valves" class="cat-btn hover:text-blue-700 pb-1 whitespace-nowrap">SMPS, SV &amp; Valves</button>
+        <button onclick="selectCategory('New RO Machines')" data-cat="New RO Machines" class="cat-btn hover:text-blue-700 pb-1 whitespace-nowrap">New RO Machines (All Brands)</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- PROMO BANNER -->
+  <section class="max-w-7xl mx-auto px-3 sm:px-6 pt-4">
+    <div class="bg-gradient-to-r from-blue-800 via-blue-700 to-cyan-600 rounded-xl p-4 sm:p-6 text-white flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-sm">
+      <div>
+        <span class="inline-block bg-amber-400 text-slate-900 text-[11px] font-extrabold uppercase px-2.5 py-0.5 rounded mb-2">100% Genuine Spare Parts</span>
+        <h1 class="text-xl sm:text-2xl font-extrabold leading-tight">Wholesale Prices on All RO Spares, Pipes &amp; New Purifiers</h1>
+        <p id="promoDeliveryText" class="text-xs sm:text-sm text-blue-100 mt-1">
+          Free Delivery on orders ₹500 &amp; above • Online Payment &amp; Cash on Delivery Available
+        </p>
+      </div>
+      <div class="flex gap-2 shrink-0">
+        <span class="bg-white/15 backdrop-blur-xs px-3 py-2 rounded-lg text-xs font-semibold flex items-center gap-1.5">
+          <i class="fa-solid fa-shield-halved text-amber-300"></i> Original Brands
+        </span>
+        <span class="bg-white/15 backdrop-blur-xs px-3 py-2 rounded-lg text-xs font-semibold flex items-center gap-1.5">
+          <i class="fa-solid fa-truck-fast text-amber-300"></i> Fast Dispatch
+        </span>
+      </div>
+    </div>
+  </section>
+
+  <!-- MAIN PRODUCT GRID -->
+  <main class="max-w-7xl mx-auto px-3 sm:px-6 py-5">
+    <div class="flex items-center justify-between mb-3">
+      <h2 id="sectionTitle" class="text-base sm:text-lg font-bold text-slate-800">All RO Parts &amp; Purifiers</h2>
+      <div class="flex items-center gap-2 text-xs">
+        <span id="productCount" class="text-slate-500 font-medium"></span>
+        <select id="sortSelect" onchange="renderProducts()" class="bg-white border border-slate-300 rounded px-2.5 py-1.5 text-xs font-medium focus:outline-none">
+          <option value="default">Sort: Featured</option>
+          <option value="low">Price: Low to High</option>
+          <option value="high">Price: High to Low</option>
+        </select>
+      </div>
+    </div>
+
+    <div id="productGrid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
+      <!-- Products injected dynamically -->
+    </div>
+  </main>
+
+  <!-- FOOTER (With Discreet Seller Login Link) -->
+  <footer class="bg-slate-900 text-slate-400 text-xs mt-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-8 grid grid-cols-1 sm:grid-cols-3 gap-6 border-b border-slate-800">
+      <div>
+        <h3 class="text-white font-bold text-sm mb-2">PureFlow RO Store</h3>
+        <p class="leading-relaxed">Your trusted online destination for 100% original RO booster pumps, sediment &amp; carbon filters, membranes, food-grade RO pipes, and all-brand water purifiers at honest prices.</p>
+      </div>
+      <div>
+        <h3 class="text-white font-bold text-sm mb-2">Brands We Deal In</h3>
+        <p class="leading-relaxed">Grand Forest, Bio+, Lexpure, Kent, Aquaguard, Pureit, Livpure, AO Smith, Dow Filmtec, CSM, Vontron &amp; more.</p>
+      </div>
+      <div>
+        <h3 class="text-white font-bold text-sm mb-2">Customer Assurance</h3>
+        <ul class="space-y-1">
+          <li><i class="fa-solid fa-check text-emerald-400 mr-1.5"></i> 100% Genuine Sealed Products</li>
+          <li><i class="fa-solid fa-check text-emerald-400 mr-1.5"></i> Secure UPI, Card &amp; COD Checkout</li>
+          <li><i class="fa-solid fa-check text-emerald-400 mr-1.5"></i> Universal Compatibility Support</li>
+        </ul>
+      </div>
+    </div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex flex-col sm:flex-row items-center justify-between gap-2">
+      <span>© 2026 PureFlow RO Store. All rights reserved.</span>
+      <button onclick="openAdminLogin()" class="text-slate-500 hover:text-slate-300 underline transition">
+        Seller Login
+      </button>
+    </div>
+  </footer>
+
+  <!-- CART DRAWER -->
+  <div id="cartDrawer" class="fixed inset-0 bg-black/50 z-50 hidden justify-end">
+    <div class="bg-white w-full max-w-md h-full flex flex-col shadow-2xl">
+      <div class="px-4 py-3.5 bg-blue-700 text-white flex items-center justify-between">
+        <h3 class="font-bold text-base flex items-center gap-2">
+          <i class="fa-solid fa-cart-shopping"></i> My Shopping Cart
+        </h3>
+        <button onclick="toggleCart(false)" class="text-white/80 hover:text-white text-xl leading-none">&times;</button>
+      </div>
+
+      <!-- Free Delivery Progress Banner -->
+      <div id="freeDeliveryBanner" class="bg-emerald-50 border-b border-emerald-200 px-4 py-2 text-xs font-semibold text-emerald-800"></div>
+
+      <div id="cartItemsContainer" class="flex-1 overflow-y-auto p-4 space-y-3">
+        <!-- Cart items rendered here -->
+      </div>
+
+      <div id="cartFooter" class="border-t border-slate-200 p-4 bg-slate-50 space-y-2.5">
+        <!-- Totals and Checkout Button -->
+      </div>
+    </div>
+  </div>
+
+  <!-- CHECKOUT MODAL (Address + Online / COD Payment) -->
+  <div id="checkoutModal" class="fixed inset-0 bg-black/60 z-50 hidden items-center justify-center p-3 overflow-y-auto">
+    <div class="bg-white rounded-xl max-w-lg w-full overflow-hidden shadow-2xl my-auto">
+      <div class="bg-blue-700 text-white px-5 py-3.5 flex items-center justify-between">
+        <h3 class="font-bold text-base"><i class="fa-solid fa-lock mr-1.5"></i> Secure Checkout</h3>
+        <button onclick="closeCheckoutModal()" class="text-white/80 hover:text-white text-xl">&times;</button>
+      </div>
+
+      <form id="checkoutForm" onsubmit="placeOrder(event)" class="p-5 space-y-4 max-h-[82vh] overflow-y-auto">
+        <!-- Delivery Address -->
+        <div>
+          <h4 class="text-xs font-extrabold uppercase tracking-wider text-blue-700 mb-2">1. Delivery Address Details</h4>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <div>
+              <label class="block text-xs font-semibold text-slate-600 mb-1">Full Name *</label>
+              <input type="text" id="custName" required placeholder="Enter your full name" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:border-blue-600 focus:outline-none" />
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-600 mb-1">Mobile Number *</label>
+              <input type="tel" id="custPhone" required pattern="[0-9]{10}" maxlength="10" placeholder="10-digit mobile number" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:border-blue-600 focus:outline-none" />
+            </div>
+            <div class="sm:col-span-2">
+              <label class="block text-xs font-semibold text-slate-600 mb-1">House No., Building, Street / Village *</label>
+              <input type="text" id="custAddress" required placeholder="Complete street address" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:border-blue-600 focus:outline-none" />
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-600 mb-1">City / District *</label>
+              <input type="text" id="custCity" required placeholder="City" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:border-blue-600 focus:outline-none" />
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-600 mb-1">PIN Code *</label>
+              <input type="text" id="custPin" required pattern="[0-9]{6}" maxlength="6" placeholder="6-digit PIN code" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:border-blue-600 focus:outline-none" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Payment Method -->
+        <div>
+          <h4 class="text-xs font-extrabold uppercase tracking-wider text-blue-700 mb-2">2. Select Payment Option</h4>
+          <div class="space-y-2">
+            <label class="flex items-center justify-between border border-slate-300 rounded-lg p-3 cursor-pointer hover:bg-blue-50/50">
+              <div class="flex items-center gap-2.5">
+                <input type="radio" name="paymentMethod" value="ONLINE" checked onchange="updateCheckoutSummary()" class="accent-blue-700 w-4 h-4" />
+                <div>
+                  <span class="font-bold text-sm text-slate-800 block">Online Payment (UPI / Cards / Net Banking)</span>
+                  <span class="text-xs text-emerald-700 font-medium">Instant confirmation • No extra COD fee</span>
+                </div>
+              </div>
+              <i class="fa-solid fa-credit-card text-blue-700 text-lg"></i>
+            </label>
+
+            <label class="flex items-center justify-between border border-slate-300 rounded-lg p-3 cursor-pointer hover:bg-blue-50/50">
+              <div class="flex items-center gap-2.5">
+                <input type="radio" name="paymentMethod" value="COD" onchange="updateCheckoutSummary()" class="accent-blue-700 w-4 h-4" />
+                <div>
+                  <span class="font-bold text-sm text-slate-800 block">Cash on Delivery (COD)</span>
+                  <span id="codOptionSubtext" class="text-xs text-slate-500">Pay cash when your order arrives</span>
+                </div>
+              </div>
+              <i class="fa-solid fa-money-bill-wave text-emerald-600 text-lg"></i>
+            </label>
+          </div>
+        </div>
+
+        <!-- Price Breakdown -->
+        <div id="checkoutPriceBox" class="bg-slate-50 border border-slate-200 rounded-lg p-3.5 text-sm space-y-1.5">
+          <!-- Filled dynamically -->
+        </div>
+
+        <button type="submit" id="confirmOrderBtn" class="w-full bg-orange-500 hover:bg-orange-600 text-white font-extrabold py-3 rounded-lg shadow transition text-sm uppercase tracking-wide">
+          Place Order
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ORDER RECEIPT MODAL -->
+  <div id="receiptModal" class="fixed inset-0 bg-black/60 z-50 hidden items-center justify-center p-3">
+    <div class="bg-white rounded-xl max-w-md w-full p-6 text-center shadow-2xl space-y-4">
+      <div class="w-14 h-14 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto text-2xl">
+        <i class="fa-solid fa-circle-check"></i>
+      </div>
+      <div>
+        <h3 class="text-xl font-extrabold text-slate-900">Order Placed Successfully!</h3>
+        <p class="text-xs text-slate-500 mt-1">Thank you for shopping with PureFlow RO Store.</p>
+      </div>
+      <div id="receiptDetails" class="bg-slate-50 border border-slate-200 rounded-lg p-3.5 text-left text-xs space-y-1.5"></div>
+      <button onclick="document.getElementById('receiptModal').classList.add('hidden')" class="w-full bg-blue-700 hover:bg-blue-800 text-white font-bold py-2.5 rounded-lg text-sm">
+        Continue Shopping
+      </button>
+    </div>
+  </div>
+
+  <!-- CUSTOMER TRACK ORDER MODAL -->
+  <div id="trackModal" class="fixed inset-0 bg-black/60 z-50 hidden items-center justify-center p-3">
+    <div class="bg-white rounded-xl max-w-lg w-full overflow-hidden shadow-2xl">
+      <div class="bg-blue-700 text-white px-5 py-3.5 flex items-center justify-between">
+        <h3 class="font-bold text-base">My Orders</h3>
+        <button onclick="document.getElementById('trackModal').classList.add('hidden')" class="text-white/80 hover:text-white text-xl">&times;</button>
+      </div>
+      <div class="p-4 max-h-[75vh] overflow-y-auto space-y-3" id="customerOrdersList"></div>
+    </div>
+  </div>
+
+  <!-- SELLER ADMIN LOGIN MODAL -->
+  <div id="adminLoginModal" class="fixed inset-0 bg-black/60 z-50 hidden items-center justify-center p-3">
+    <div class="bg-white rounded-xl max-w-sm w-full p-6 shadow-2xl space-y-4">
+      <div class="flex items-center justify-between">
+        <h3 class="font-extrabold text-base text-slate-900"><i class="fa-solid fa-user-shield text-blue-700 mr-1.5"></i> Seller Admin Access</h3>
+        <button onclick="document.getElementById('adminLoginModal').classList.add('hidden')" class="text-slate-400 hover:text-slate-700 text-xl">&times;</button>
+      </div>
+      <p class="text-xs text-slate-500">Enter your Admin PIN to manage products, photos, prices, delivery charges &amp; orders.</p>
+      <input type="password" id="adminPinInput" placeholder="Enter Admin PIN" class="w-full border border-slate-300 rounded-lg px-3.5 py-2.5 text-sm focus:border-blue-600 focus:outline-none" />
+      <p id="pinError" class="text-xs text-red-600 font-semibold hidden">Incorrect Admin PIN. Please try again.</p>
+      <button onclick="verifyAdminPin()" class="w-full bg-blue-700 hover:bg-blue-800 text-white font-bold py-2.5 rounded-lg text-sm">
+        Unlock Seller Dashboard
+      </button>
+    </div>
+  </div>
+
+  <!-- SELLER ADMIN DASHBOARD MODAL -->
+  <div id="adminDashboardModal" class="fixed inset-0 bg-black/70 z-50 hidden items-center justify-center p-2 sm:p-4 overflow-y-auto">
+    <div class="bg-white rounded-xl max-w-5xl w-full overflow-hidden shadow-2xl my-auto flex flex-col max-h-[92vh]">
+      <div class="bg-slate-900 text-white px-5 py-3.5 flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <span class="bg-amber-400 text-slate-900 text-xs font-extrabold px-2 py-0.5 rounded">ADMIN</span>
+          <h3 class="font-bold text-base">PureFlow Seller Control Panel</h3>
+        </div>
+        <button onclick="closeAdminDashboard()" class="text-slate-300 hover:text-white text-2xl leading-none">&times;</button>
+      </div>
+
+      <!-- Admin Tabs -->
+      <div class="bg-slate-100 border-b border-slate-200 px-4 flex gap-4 text-xs sm:text-sm font-bold overflow-x-auto">
+        <button onclick="switchAdminTab('products')" id="tabBtnProducts" class="py-3 border-b-2 border-blue-700 text-blue-700 whitespace-nowrap">1. Products &amp; Prices</button>
+        <button onclick="switchAdminTab('shipping')" id="tabBtnShipping" class="py-3 border-b-2 border-transparent text-slate-600 hover:text-slate-900 whitespace-nowrap">2. Delivery &amp; COD Charges</button>
+        <button onclick="switchAdminTab('orders')" id="tabBtnOrders" class="py-3 border-b-2 border-transparent text-slate-600 hover:text-slate-900 whitespace-nowrap">3. Customer Orders</button>
+      </div>
+
+      <!-- TAB 1: PRODUCTS & PRICES -->
+      <div id="adminTabProducts" class="p-4 sm:p-6 overflow-y-auto space-y-6">
+        <!-- Add New Product Form -->
+        <form id="addProductForm" onsubmit="addNewProduct(event)" class="bg-blue-50/70 border border-blue-200 rounded-xl p-4 space-y-3">
+          <h4 class="font-extrabold text-sm text-blue-900"><i class="fa-solid fa-plus-circle mr-1"></i> Add New RO Part, Pipe or Machine</h4>
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+            <div>
+              <label class="block text-xs font-semibold text-slate-700 mb-1">Product Name *</label>
+              <input type="text" id="newProdName" required placeholder="e.g., Grand Forest 100 GPD Pump" class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs" />
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-700 mb-1">Brand *</label>
+              <input type="text" id="newProdBrand" required placeholder="e.g., Grand Forest / Bio+ / Kent" class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs" />
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-700 mb-1">Category *</label>
+              <select id="newProdCategory" class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs">
+                <option value="RO Pumps & Motors">RO Pumps &amp; Motors</option>
+                <option value="Filters & Membranes">Filters &amp; Membranes</option>
+                <option value="RO Pipes & Fittings">RO Pipes &amp; Fittings</option>
+                <option value="Electrical & Valves">Electrical &amp; Valves</option>
+                <option value="New RO Machines">New RO Machines</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-700 mb-1">Selling Price (₹) *</label>
+              <input type="number" id="newProdPrice" required min="1" placeholder="e.g., 1400" class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs" />
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-slate-700 mb-1">MRP / Strike Price (₹)</label>
+              <input type="number" id="newProdMrp" min="1" placeholder="Optional higher MRP" class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs" />
+            </div>
+            <div class="sm:col-span-2">
+              <label class="block text-xs font-semibold text-slate-700 mb-1">Select Product Photo from Gallery *</label>
+              <input type="file" id="newProdImageFile" accept="image/*" onchange="previewNewImage(event)" class="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs" />
+            </div>
+            <div class="flex items-center gap-2">
+              <img id="newImagePreview" src="" alt="Preview" class="w-12 h-12 rounded border border-slate-300 object-cover hidden bg-white" />
+              <button type="submit" class="w-full bg-blue-700 hover:bg-blue-800 text-white font-bold py-2.5 px-4 rounded-lg text-xs">
+                + Add Product
+              </button>
+            </div>
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-700 mb-1">Compatibility &amp; Description</label>
+            <input type="text" id="newProdDesc" placeholder="e.g., Suitable for all domestic RO purifiers (Kent, Aquaguard, Pureit, Livpure)" class="w-full bg-white border border-slate-300 rounded-lg px-3 py-2 text-xs" />
+          </div>
+        </form>
+
+        <!-- Existing Products Manager Table -->
+        <div>
+          <h4 class="font-extrabold text-sm text-slate-800 mb-2">Manage Existing Products (Edit Price, Photo &amp; Availability)</h4>
+          <div class="overflow-x-auto border border-slate-200 rounded-lg">
+            <table class="w-full text-left text-xs">
+              <thead class="bg-slate-100 text-slate-700 font-bold border-b border-slate-200">
+                <tr>
+                  <th class="p-2.5">Photo</th>
+                  <th class="p-2.5">Product Details</th>
+                  <th class="p-2.5">Price (₹)</th>
+                  <th class="p-2.5">Availability</th>
+                  <th class="p-2.5 text-right">Actions</th>
+                </tr>
+              </thead>
+              <tbody id="adminProductsTable" class="divide-y divide-slate-200"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB 2: DELIVERY & COD SETTINGS -->
+      <div id="adminTabShipping" class="p-5 overflow-y-auto hidden space-y-5">
+        <div class="max-w-lg bg-slate-50 border border-slate-200 rounded-xl p-5 space-y-4">
+          <h4 class="font-extrabold text-sm text-slate-900">Configure Delivery &amp; COD Fee Rules</h4>
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Minimum Order Amount for FREE Delivery (₹)</label>
+            <input type="number" id="cfgFreeThreshold" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm bg-white" />
+            <p class="text-[11px] text-slate-500 mt-1">Orders equal to or above this amount automatically get FREE Delivery (Default: ₹500).</p>
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Shipping Fee for Orders Below Minimum Amount (₹)</label>
+            <input type="number" id="cfgShippingFee" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm bg-white" />
+            <p class="text-[11px] text-slate-500 mt-1">Added automatically when cart total is below ₹500.</p>
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-700 mb-1">Cash on Delivery (COD) Extra Handling Fee (₹)</label>
+            <input type="number" id="cfgCodFee" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm bg-white" />
+            <p class="text-[11px] text-slate-500 mt-1">Added only when customer chooses Cash on Delivery (set 0 for free COD).</p>
+          </div>
+          <div class="pt-2 border-t border-slate-200">
+            <label class="block text-xs font-bold text-slate-700 mb-1">Change Seller Admin PIN</label>
+            <input type="text" id="cfgAdminPin" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm bg-white" />
+          </div>
+          <button onclick="saveStoreSettings()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-5 py-2.5 rounded-lg text-xs">
+            Save Delivery &amp; Store Settings
+          </button>
+        </div>
+      </div>
+
+      <!-- TAB 3: CUSTOMER ORDERS -->
+      <div id="adminTabOrders" class="p-4 sm:p-6 overflow-y-auto hidden space-y-3">
+        <div id="adminOrdersContainer" class="space-y-3"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FIREBASE SDK + APPLICATION LOGIC -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getFirestore, doc, getDoc, setDoc, collection, getDocs, addDoc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+    // =========================================================================
+    // PASTE YOUR FIREBASE CONFIG BELOW TO ENABLE LIVE MULTI-DEVICE CLOUD SYNC
+    // =========================================================================
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+      projectId: "YOUR_PROJECT_ID",
+      storageBucket: "YOUR_PROJECT_ID.appspot.com",
+      messagingSenderId: "YOUR_SENDER_ID",
+      appId: "YOUR_APP_ID"
+    };
+
+    let db = null;
+    const isFirebaseConfigured = firebaseConfig.apiKey && firebaseConfig.apiKey !== "YOUR_API_KEY";
+    if (isFirebaseConfigured) {
+      try {
+        const app = initializeApp(firebaseConfig);
+        db = getFirestore(app);
+      } catch (e) {
+        console.warn("Firebase fallback to localStorage:", e);
+      }
+    }
+
+    // Default Initial Catalog
+    const defaultProducts = [
+      {
+        id: "prod_1",
+        name: "Grand Forest 100 GPD RO Booster Pump",
+        brand: "Grand Forest",
+        category: "RO Pumps & Motors",
+        price: 1400,
+        mrp: 1850,
+        inStock: true,
+        desc: "Heavy-duty 100 GPD copper-winding RO booster pump compatible with all domestic RO purifiers.",
+        image: "https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&w=500&q=80"
+      },
+      {
+        id: "prod_2",
+        name: "Bio+ Inline Sediment Filter Cartridge",
+        brand: "Bio+",
+        category: "Filters & Membranes",
+        price: 350,
+        mrp: 499,
+        inStock: true,
+        desc: "High-density spun sediment filter removes dust, rust, and suspended impurities. Universal fit.",
+        image: "https://images.unsplash.com/photo-1585771724684-38269d6639fd?auto=format&fit=crop&w=500&q=80"
+      },
+      {
+        id: "prod_3",
+        name: "Bio+ Pre/Post Activated Carbon Filter",
+        brand: "Bio+",
+        category: "Filters & Membranes",
+        price: 350,
+        mrp: 499,
+        inStock: true,
+        desc: "Premium coconut-shell activated carbon block removes chlorine, bad odor, and organic chemicals.",
+        image: "https://images.unsplash.com/photo-1563453392212-326f5e854473?auto=format&fit=crop&w=500&q=80"
+      },
+      {
+        id: "prod_4",
+        name: "Lexpure High-TDS RO Membrane / Filter Kit",
+        brand: "Lexpure",
+        category: "Filters & Membranes",
+        price: 800,
+        mrp: 1150,
+        inStock: true,
+        desc: "Genuine Lexpure high-rejection RO cartridge suitable for borewell and municipal water up to 2000 TDS.",
+        image: "https://images.unsplash.com/photo-1521207418485-99c705420785?auto=format&fit=crop&w=500&q=80"
+      },
+      {
+        id: "prod_5",
+        name: "Food-Grade 1/4 Inch RO Pipe Roll (10 Meters)",
+        brand: "PureFlow",
+        category: "RO Pipes & Fittings",
+        price: 220,
+        mrp: 320,
+        inStock: true,
+        desc: "Flexible, leak-proof 1/4 inch LLDPE white RO tubing roll with 4 free push-fit elbow connectors.",
+        image: "https://images.unsplash.com/photo-1504328345606-18bbc8c9d7d1?auto=format&fit=crop&w=500&q=80"
+      },
+      {
+        id: "prod_6",
+        name: "All-Brand Domestic RO+UV+UF+TDS Water Purifier (12L)",
+        brand: "Kent / Aquaguard / Livpure",
+        category: "New RO Machines",
+        price: 7499,
+        mrp: 10999,
+        inStock: true,
+        desc: "Brand-new 12-litre storage RO+UV+UF+Mineral water purifier with 1-year warranty & installation kit.",
+        image: "https://images.unsplash.com/photo-1548839140-29a749e1cf4d?auto=format&fit=crop&w=500&q=80"
+      }
+    ];
+
+    // Store Configuration (Admin Editable)
+    let storeSettings = JSON.parse(localStorage.getItem("pf_settings")) || {
+      freeThreshold: 500,
+      shippingFee: 50,
+      codFee: 40,
+      adminPin: "7890"
+    };
+
+    let products = JSON.parse(localStorage.getItem("pf_products")) || defaultProducts;
+    let cart = JSON.parse(localStorage.getItem("pf_cart")) || [];
+    let orders = JSON.parse(localStorage.getItem("pf_orders")) || [];
+    let activeCategory = "All";
+    let uploadedNewImageBase64 = "";
+
+    // Sync from Firebase if configured
+    async function initStoreData() {
+      if (db) {
+        try {
+          const settingsSnap = await getDoc(doc(db, "store", "settings"));
+          if (settingsSnap.exists()) {
+            storeSettings = { ...storeSettings, ...settingsSnap.data() };
+            localStorage.setItem("pf_settings", JSON.stringify(storeSettings));
+          }
+          const prodSnap = await getDocs(collection(db, "products"));
+          if (!prodSnap.empty) {
+            products = prodSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+            localStorage.setItem("pf_products", JSON.stringify(products));
+          }
+          const orderSnap = await getDocs(collection(db, "orders"));
+          if (!orderSnap.empty) {
+            orders = orderSnap.docs.map(d => ({ id: d.id, ...d.data() }));
+            localStorage.setItem("pf_orders", JSON.stringify(orders));
+          }
+        } catch (err) {
+          console.error("Cloud sync read error:", err);
+        }
+      }
+      updatePromoBannerText();
+      renderProducts();
+      updateCartUI();
+    }
+
+    function updatePromoBannerText() {
+      document.getElementById("promoDeliveryText").textContent =
+        `FREE Delivery on orders ₹${storeSettings.freeThreshold} & above • Online Payment & Cash on Delivery Available`;
+    }
+
+    // Category & Filter Controls
+    window.selectCategory = function(cat) {
+      activeCategory = cat;
+      document.querySelectorAll(".cat-btn").forEach(btn => {
+        if (btn.dataset.cat === cat) {
+          btn.classList.add("text-blue-700", "border-b-2", "border-blue-700");
+        } else {
+          btn.classList.remove("text-blue-700", "border-b-2", "border-blue-700");
+        }
+      });
+      document.getElementById("sectionTitle").textContent = cat === "All" ? "All RO Parts & Purifiers" : cat;
+      renderProducts();
+    };
+
+    window.resetFilters = function() {
+      document.getElementById("searchInput").value = "";
+      document.getElementById("sortSelect").value = "default";
+      selectCategory("All");
+    };
+
+    // Render Product Grid (Flipkart-Style Clean Customer Cards)
+    window.renderProducts = function() {
+      const query = document.getElementById("searchInput").value.trim().toLowerCase();
+      const sortBy = document.getElementById("sortSelect").value;
+
+      let filtered = products.filter(p => {
+        const matchesCat = activeCategory === "All" || p.category === activeCategory;
+        const matchesQuery =
+          p.name.toLowerCase().includes(query) ||
+          p.brand.toLowerCase().includes(query) ||
+          (p.desc && p.desc.toLowerCase().includes(query));
+        return matchesCat && matchesQuery;
+      });
+
+      if (sortBy === "low") filtered.sort((a, b) => a.price - b.price);
+      if (sortBy === "high") filtered.sort((a, b) => b.price - a.price);
+
+      document.getElementById("productCount").textContent = `${filtered.length} item(s)`;
+      const grid = document.getElementById("productGrid");
+
+      if (filtered.length === 0) {
+        grid.innerHTML = `<div class="col-span-full bg-white rounded-xl p-10 text-center text-slate-500 text-sm">No RO parts or machines matched your search.</div>`;
+        return;
+      }
+
+      grid.innerHTML = filtered.map(p => {
+        const discount = p.mrp && p.mrp > p.price ? Math.round(((p.mrp - p.price) / p.mrp) * 100) : 0;
+        const freeShipEligible = p.price >= storeSettings.freeThreshold;
+        return `
+          <div class="bg-white rounded-lg border border-slate-200/80 hover:shadow-lg transition flex flex-col overflow-hidden">
+            <div class="relative bg-slate-50 h-44 sm:h-48 flex items-center justify-center p-3">
+              <img src="${p.image}" alt="${p.name}" class="max-h-full max-w-full object-contain" />
+              <span class="absolute top-2 left-2 text-[10px] font-bold px-2 py-0.5 rounded ${p.inStock ? 'bg-emerald-100 text-emerald-800' : 'bg-red-100 text-red-700'}">
+                ${p.inStock ? 'In Stock' : 'Out of Stock'}
+              </span>
+              ${discount > 0 ? `<span class="absolute top-2 right-2 bg-green-600 text-white text-[10px] font-bold px-1.5 py-0.5 rounded">${discount}% OFF</span>` : ''}
+            </div>
+
+            <div class="p-3.5 flex-1 flex flex-col justify-between">
+              <div>
+                <span class="text-[11px] font-bold uppercase tracking-wide text-blue-700">${p.brand}</span>
+                <h3 class="font-bold text-xs sm:text-sm text-slate-900 line-clamp-2 mt-0.5">${p.name}</h3>
+                <p class="text-[11px] text-slate-500 line-clamp-2 mt-1">${p.desc || ''}</p>
+              </div>
+
+              <div class="mt-3 pt-2.5 border-t border-slate-100">
+                <div class="flex items-baseline gap-2">
+                  <span class="text-base sm:text-lg font-extrabold text-slate-900">₹${p.price.toLocaleString('en-IN')}</span>
+                  ${p.mrp && p.mrp > p.price ? `<span class="text-xs text-slate-400 line-through">₹${p.mrp.toLocaleString('en-IN')}</span>` : ''}
+                </div>
+                <p class="text-[11px] font-semibold mt-0.5 ${freeShipEligible ? 'text-emerald-700' : 'text-slate-500'}">
+                  ${freeShipEligible ? '✓ FREE Delivery' : `+ ₹${storeSettings.shippingFee} Delivery (Free ≥ ₹${storeSettings.freeThreshold})`}
+                </p>
+
+                <div class="grid grid-cols-2 gap-1.5 mt-3">
+                  <button
+                    onclick="addToCart('${p.id}')"
+                    ${!p.inStock ? 'disabled' : ''}
+                    class="py-2 px-2 rounded text-xs font-bold border transition ${p.inStock ? 'border-blue-700 text-blue-700 hover:bg-blue-50' : 'border-slate-200 text-slate-400 cursor-not-allowed'}"
+                  >
+                    Add to Cart
+                  </button>
+                  <button
+                    onclick="buyNow('${p.id}')"
+                    ${!p.inStock ? 'disabled' : ''}
+                    class="py-2 px-2 rounded text-xs font-bold text-white transition ${p.inStock ? 'bg-orange-500 hover:bg-orange-600' : 'bg-slate-300 cursor-not-allowed'}"
+                  >
+                    Buy Now
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join("");
+    };
+
+    // Cart Management
+    window.addToCart = function(productId) {
+      const prod = products.find(p => p.id === productId);
+      if (!prod || !prod.inStock) return;
+      const existing = cart.find(item => item.id === productId);
+      if (existing) {
+        existing.qty += 1;
+      } else {
+        cart.push({ id: prod.id, name: prod.name, brand: prod.brand, price: prod.price, image: prod.image, qty: 1 });
+      }
+      saveCart();
+      toggleCart(true);
+    };
+
+    window.buyNow = function(productId) {
+      const prod = products.find(p => p.id === productId);
+      if (!prod || !prod.inStock) return;
+      const existing = cart.find(item => item.id === productId);
+      if (!existing) {
+        cart.push({ id: prod.id, name: prod.name, brand: prod.brand, price: prod.price, image: prod.image, qty: 1 });
+        saveCart();
+      }
+      openCheckoutModal();
+    };
+
+    window.updateCartQty = function(productId, delta) {
+      const idx = cart.findIndex(i => i.id === productId);
+      if (idx === -1) return;
+      cart[idx].qty += delta;
+      if (cart[idx].qty <= 0) cart.splice(idx, 1);
+      saveCart();
+    };
+
+    function saveCart() {
+      localStorage.setItem("pf_cart", JSON.stringify(cart));
+      updateCartUI();
+    }
+
+    function getCartTotals() {
+      const subtotal = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+      const shipping = subtotal === 0 ? 0 : (subtotal >= storeSettings.freeThreshold ? 0 : Number(storeSettings.shippingFee));
+      return { subtotal, shipping };
+    }
+
+    function updateCartUI() {
+      const totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
+      document.getElementById("cartBadge").textContent = totalItems;
+
+      const { subtotal, shipping } = getCartTotals();
+      const banner = document.getElementById("freeDeliveryBanner");
+      if (subtotal >= storeSettings.freeThreshold) {
+        banner.innerHTML = `<i class="fa-solid fa-circle-check mr-1"></i> Yay! Your order qualifies for <strong>FREE Delivery</strong>.`;
+      } else {
+        const diff = storeSettings.freeThreshold - subtotal;
+        banner.innerHTML = `Add items worth <strong>₹${diff}</strong> more to unlock <strong>FREE Delivery</strong> (below ₹${storeSettings.freeThreshold} shipping is ₹${storeSettings.shippingFee}).`;
+      }
+
+      const container = document.getElementById("cartItemsContainer");
+      const footer = document.getElementById("cartFooter");
+
+      if (cart.length === 0) {
+        container.innerHTML = `<div class="text-center py-12 text-slate-400 text-sm">Your cart is currently empty.</div>`;
+        footer.innerHTML = "";
+        return;
+      }
+
+      container.innerHTML = cart.map(item => `
+        <div class="flex items-center gap-3 bg-white border border-slate-200 rounded-lg p-2.5">
+          <img src="${item.image}" class="w-14 h-14 object-contain bg-slate-50 rounded p-1" />
+          <div class="flex-1 min-w-0">
+            <h4 class="text-xs font-bold text-slate-800 truncate">${item.name}</h4>
+            <p class="text-xs font-extrabold text-blue-700 mt-0.5">₹${(item.price * item.qty).toLocaleString('en-IN')}</p>
+            <div class="flex items-center gap-2 mt-1.5">
+              <button onclick="updateCartQty('${item.id}', -1)" class="w-6 h-6 rounded bg-slate-200 font-bold text-xs">-</button>
+              <span class="text-xs font-bold">${item.qty}</span>
+              <button onclick="updateCartQty('${item.id}', 1)" class="w-6 h-6 rounded bg-slate-200 font-bold text-xs">+</button>
+            </div>
+          </div>
+        </div>
+      `).join("");
+
+      footer.innerHTML = `
+        <div class="flex justify-between text-xs text-slate-600">
+          <span>Items Subtotal</span>
+          <span class="font-bold text-slate-900">₹${subtotal.toLocaleString('en-IN')}</span>
+        </div>
+        <div class="flex justify-between text-xs text-slate-600">
+          <span>Delivery Charge</span>
+          <span class="font-bold ${shipping === 0 ? 'text-emerald-700' : 'text-slate-900'}">
+            ${shipping === 0 ? 'FREE' : '₹' + shipping}
+          </span>
+        </div>
+        <div class="flex justify-between text-sm font-extrabold text-slate-900 pt-2 border-t border-slate-200">
+          <span>Total Payable</span>
+          <span>₹${(subtotal + shipping).toLocaleString('en-IN')}</span>
+        </div>
+        <button onclick="openCheckoutModal()" class="w-full bg-orange-500 hover:bg-orange-600 text-white font-extrabold py-2.5 rounded-lg text-sm uppercase tracking-wide shadow">
+          Proceed to Checkout
+        </button>
+      `;
+    }
+
+    window.toggleCart = function(open) {
+      const drawer = document.getElementById("cartDrawer");
+      if (open) {
+        drawer.classList.remove("hidden");
+        drawer.classList.add("flex");
+      } else {
+        drawer.classList.add("hidden");
+        drawer.classList.remove("flex");
+      }
+    };
+
+    // Checkout & Payment Flow
+    window.openCheckoutModal = function() {
+      if (cart.length === 0) return;
+      toggleCart(false);
+      const codFee = Number(storeSettings.codFee);
+      document.getElementById("codOptionSubtext").textContent =
+        codFee > 0 ? `Pay cash on delivery (+ ₹${codFee} COD handling fee)` : "Pay cash when your order arrives (No extra fee)";
+      updateCheckoutSummary();
+      const modal = document.getElementById("checkoutModal");
+      modal.classList.remove("hidden");
+      modal.classList.add("flex");
+    };
+
+    window.closeCheckoutModal = function() {
+      const modal = document.getElementById("checkoutModal");
+      modal.classList.add("hidden");
+      modal.classList.remove("flex");
+    };
+
+    window.updateCheckoutSummary = function() {
+      const { subtotal, shipping } = getCartTotals();
+      const method = document.querySelector('input[name="paymentMethod"]:checked').value;
+      const codCharge = method === "COD" ? Number(storeSettings.codFee) : 0;
+      const grandTotal = subtotal + shipping + codCharge;
+
+      document.getElementById("checkoutPriceBox").innerHTML = `
+        <div class="flex justify-between text-xs text-slate-600">
+          <span>Items Total (${cart.reduce((s, i) => s + i.qty, 0)} items)</span>
+          <span class="font-bold text-slate-900">₹${subtotal.toLocaleString('en-IN')}</span>
+        </div>
+        <div class="flex justify-between text-xs text-slate-600">
+          <span>Delivery Fee ${subtotal >= storeSettings.freeThreshold ? '(Order ≥ ₹' + storeSettings.freeThreshold + ')' : '(Order &lt; ₹' + storeSettings.freeThreshold + ')'}</span>
+          <span class="font-bold ${shipping === 0 ? 'text-emerald-700' : 'text-slate-900'}">${shipping === 0 ? 'FREE' : '₹' + shipping}</span>
+        </div>
+        ${method === 'COD' ? `
+        <div class="flex justify-between text-xs text-slate-600">
+          <span>Cash on Delivery (COD) Fee</span>
+          <span class="font-bold text-slate-900">${codCharge === 0 ? 'FREE' : '₹' + codCharge}</span>
+        </div>` : ''}
+        <div class="flex justify-between text-sm font-extrabold text-slate-900 pt-2 border-t border-slate-200">
+          <span>Final Amount to Pay</span>
+          <span>₹${grandTotal.toLocaleString('en-IN')}</span>
+        </div>
+      `;
+
+      document.getElementById("confirmOrderBtn").textContent =
+        method === "ONLINE" ? `Pay ₹${grandTotal.toLocaleString('en-IN')} Online & Place Order` : `Confirm COD Order (₹${grandTotal.toLocaleString('en-IN')})`;
+    };
+
+    window.placeOrder = async function(e) {
+      e.preventDefault();
+      const { subtotal, shipping } = getCartTotals();
+      const method = document.querySelector('input[name="paymentMethod"]:checked').value;
+      const codCharge = method === "COD" ? Number(storeSettings.codFee) : 0;
+      const grandTotal = subtotal + shipping + codCharge;
+
+      const orderObj = {
+        orderId: "PF" + Math.floor(100000 + Math.random() * 900000),
+        date: new Date().toLocaleString("en-IN"),
+        customerName: document.getElementById("custName").value.trim(),
+        customerPhone: document.getElementById("custPhone").value.trim(),
+        address: `${document.getElementById("custAddress").value.trim()}, ${document.getElementById("custCity").value.trim()} - ${document.getElementById("custPin").value.trim()}`,
+        paymentMethod: method === "ONLINE" ? "Online Payment (Paid)" : "Cash on Delivery (COD)",
+        items: [...cart],
+        subtotal,
+        shipping,
+        codCharge,
+        total: grandTotal,
+        status: "Confirmed"
+      };
+
+      orders.unshift(orderObj);
+      localStorage.setItem("pf_orders", JSON.stringify(orders));
+
+      if (db) {
+        try {
+          await addDoc(collection(db, "orders"), orderObj);
+        } catch (err) {
+          console.error("Order cloud save failed:", err);
+        }
+      }
+
+      cart = [];
+      saveCart();
+      closeCheckoutModal();
+      document.getElementById("checkoutForm").reset();
+
+      document.getElementById("receiptDetails").innerHTML = `
+        <p><strong>Order ID:</strong> ${orderObj.orderId}</p>
+        <p><strong>Customer:</strong> ${orderObj.customerName} (${orderObj.customerPhone})</p>
+        <p><strong>Delivery Address:</strong> ${orderObj.address}</p>
+        <p><strong>Payment Mode:</strong> ${orderObj.paymentMethod}</p>
+        <p><strong>Total Paid / Payable:</strong> ₹${orderObj.total.toLocaleString('en-IN')}</p>
+      `;
+      const rModal = document.getElementById("receiptModal");
+      rModal.classList.remove("hidden");
+      rModal.classList.add("flex");
+    };
+
+    // Customer My Orders Modal
+    window.openTrackOrderModal = function() {
+      const list = document.getElementById("customerOrdersList");
+      if (orders.length === 0) {
+        list.innerHTML = `<p class="text-center text-slate-500 text-xs py-8">No orders placed from this device yet.</p>`;
+      } else {
+        list.innerHTML = orders.map(o => `
+          <div class="border border-slate-200 rounded-lg p-3 text-xs space-y-1">
+            <div class="flex justify-between font-bold text-slate-900">
+              <span>Order #${o.orderId}</span>
+              <span class="text-blue-700">${o.status}</span>
+            </div>
+            <p class="text-slate-500">${o.date}</p>
+            <p class="text-slate-700">${o.items.map(i => `${i.name} (x${i.qty})`).join(", ")}</p>
+            <p class="font-bold text-slate-900 pt-1">Total: ₹${o.total.toLocaleString('en-IN')} • ${o.paymentMethod}</p>
+          </div>
+        `).join("");
+      }
+      const m = document.getElementById("trackModal");
+      m.classList.remove("hidden");
+      m.classList.add("flex");
+    };
+
+    // =========================================================================
+    // SELLER ADMIN CONTROLS (PIN PROTECTED)
+    // =========================================================================
+    window.openAdminLogin = function() {
+      document.getElementById("adminPinInput").value = "";
+      document.getElementById("pinError").classList.add("hidden");
+      const m = document.getElementById("adminLoginModal");
+      m.classList.remove("hidden");
+      m.classList.add("flex");
+    };
+
+    window.verifyAdminPin = function() {
+      const entered = document.getElementById("adminPinInput").value.trim();
+      if (entered === String(storeSettings.adminPin)) {
+        document.getElementById("adminLoginModal").classList.add("hidden");
+        openAdminDashboard();
+      } else {
+        document.getElementById("pinError").classList.remove("hidden");
+      }
+    };
+
+    function openAdminDashboard() {
+      document.getElementById("cfgFreeThreshold").value = storeSettings.freeThreshold;
+      document.getElementById("cfgShippingFee").value = storeSettings.shippingFee;
+      document.getElementById("cfgCodFee").value = storeSettings.codFee;
+      document.getElementById("cfgAdminPin").value = storeSettings.adminPin;
+      renderAdminProducts();
+      renderAdminOrders();
+      const m = document.getElementById("adminDashboardModal");
+      m.classList.remove("hidden");
+      m.classList.add("flex");
+    }
+
+    window.closeAdminDashboard = function() {
+      document.getElementById("adminDashboardModal").classList.add("hidden");
+    };
+
+    window.switchAdminTab = function(tab) {
+      ["products", "shipping", "orders"].forEach(t => {
+        document.getElementById("adminTab" + t.charAt(0).toUpperCase() + t.slice(1)).classList.toggle("hidden", t !== tab);
+        const btn = document.getElementById("tabBtn" + t.charAt(0).toUpperCase() + t.slice(1));
+        if (t === tab) {
+          btn.classList.add("border-blue-700", "text-blue-700");
+          btn.classList.remove("border-transparent", "text-slate-600");
+        } else {
+          btn.classList.remove("border-blue-700", "text-blue-700");
+          btn.classList.add("border-transparent", "text-slate-600");
+        }
+      });
+    };
+
+    // Image Compression Helper (Converts Gallery Photo to Compact Base64)
+    function compressImageToBase64(file, callback) {
+      const reader = new FileReader();
+      reader.onload = function(event) {
+        const img = new Image();
+        img.onload = function() {
+          const canvas = document.createElement("canvas");
+          const maxDim = 500;
+          let w = img.width, h = img.height;
+          if (w > maxDim || h > maxDim) {
+            if (w > h) { h = Math.round((h * maxDim) / w); w = maxDim; }
+            else { w = Math.round((w * maxDim) / h); h = maxDim; }
+          }
+          canvas.width = w;
+          canvas.height = h;
+          canvas.getContext("2d").drawImage(img, 0, 0, w, h);
+          callback(canvas.toDataURL("image/jpeg", 0.78));
+        };
+        img.src = event.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    window.previewNewImage = function(e) {
+      const file = e.target.files[0];
+      if (!file) return;
+      compressImageToBase64(file, (base64) => {
+        uploadedNewImageBase64 = base64;
+        const img = document.getElementById("newImagePreview");
+        img.src = base64;
+        img.classList.remove("hidden");
+      });
+    };
+
+    window.addNewProduct = async function(e) {
+      e.preventDefault();
+      const newProd = {
+        id: "prod_" + Date.now(),
+        name: document.getElementById("newProdName").value.trim(),
+        brand: document.getElementById("newProdBrand").value.trim(),
+        category: document.getElementById("newProdCategory").value,
+        price: Number(document.getElementById("newProdPrice").value),
+        mrp: Number(document.getElementById("newProdMrp").value) || null,
+        desc: document.getElementById("newProdDesc").value.trim(),
+        inStock: true,
+        image: uploadedNewImageBase64 || "https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&w=500&q=80"
+      };
+
+      products.unshift(newProd);
+      await persistProducts();
+      e.target.reset();
+      uploadedNewImageBase64 = "";
+      document.getElementById("newImagePreview").classList.add("hidden");
+      renderAdminProducts();
+      renderProducts();
+      alert("Product added successfully!");
+    };
+
+    window.updateProductPrice = async function(id, newPrice) {
+      const p = products.find(item => item.id === id);
+      if (!p || !newPrice || Number(newPrice) <= 0) return;
+      p.price = Number(newPrice);
+      await persistProducts();
+      renderProducts();
+    };
+
+    window.toggleProductStock = async function(id) {
+      const p = products.find(item => item.id === id);
+      if (!p) return;
+      p.inStock = !p.inStock;
+      await persistProducts();
+      renderAdminProducts();
+      renderProducts();
+    };
+
+    window.changeProductPhoto = function(id, event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      compressImageToBase64(file, async (base64) => {
+        const p = products.find(item => item.id === id);
+        if (!p) return;
+        p.image = base64;
+        await persistProducts();
+        renderAdminProducts();
+        renderProducts();
+      });
+    };
+
+    window.deleteProduct = async function(id) {
+      if (!confirm("Delete this product from the store?")) return;
+      products = products.filter(p => p.id !== id);
+      localStorage.setItem("pf_products", JSON.stringify(products));
+      if (db) {
+        try { await deleteDoc(doc(db, "products", id)); } catch (e) {}
+      }
+      renderAdminProducts();
+      renderProducts();
+    };
+
+    async function persistProducts() {
+      localStorage.setItem("pf_products", JSON.stringify(products));
+      if (db) {
+        for (const p of products) {
+          try { await setDoc(doc(db, "products", p.id), p); } catch (e) {}
+        }
+      }
+    }
+
+    function renderAdminProducts() {
+      const tbody = document.getElementById("adminProductsTable");
+      tbody.innerHTML = products.map(p => `
+        <tr>
+          <td class="p-2.5">
+            <img src="${p.image}" class="w-12 h-12 object-contain border rounded bg-white mb-1" />
+            <label class="cursor-pointer text-[10px] font-bold text-blue-700 underline block">
+              Change Photo
+              <input type="file" accept="image/*" onchange="changeProductPhoto('${p.id}', event)" class="hidden" />
+            </label>
+          </td>
+          <td class="p-2.5">
+            <p class="font-bold text-slate-900">${p.name}</p>
+            <p class="text-[11px] text-slate-500">${p.brand} • ${p.category}</p>
+          </td>
+          <td class="p-2.5">
+            <input type="number" value="${p.price}" onchange="updateProductPrice('${p.id}', this.value)" class="w-24 border border-slate-300 rounded px-2 py-1 font-bold text-slate-900" />
+          </td>
+          <td class="p-2.5">
+            <button onclick="toggleProductStock('${p.id}')" class="px-2.5 py-1 rounded text-[11px] font-bold ${p.inStock ? 'bg-emerald-100 text-emerald-800' : 'bg-red-100 text-red-700'}">
+              ${p.inStock ? 'In Stock' : 'Out of Stock'}
+            </button>
+          </td>
+          <td class="p-2.5 text-right">
+            <button onclick="deleteProduct('${p.id}')" class="text-red-600 hover:underline font-bold">Delete</button>
+          </td>
+        </tr>
+      `).join("");
+    }
+
+    window.saveStoreSettings = async function() {
+      storeSettings.freeThreshold = Number(document.getElementById("cfgFreeThreshold").value) || 500;
+      storeSettings.shippingFee = Number(document.getElementById("cfgShippingFee").value) || 0;
+      storeSettings.codFee = Number(document.getElementById("cfgCodFee").value) || 0;
+      storeSettings.adminPin = document.getElementById("cfgAdminPin").value.trim() || "7890";
+
+      localStorage.setItem("pf_settings", JSON.stringify(storeSettings));
+      if (db) {
+        try { await setDoc(doc(db, "store", "settings"), storeSettings); } catch (e) {}
+      }
+      updatePromoBannerText();
+      renderProducts();
+      updateCartUI();
+      alert("Delivery, COD & Store settings saved!");
+    };
+
+    function renderAdminOrders() {
+      const container = document.getElementById("adminOrdersContainer");
+      if (orders.length === 0) {
+        container.innerHTML = `<p class="text-center text-slate-500 text-xs py-8">No customer orders received yet.</p>`;
+        return;
+      }
+      container.innerHTML = orders.map((o, idx) => `
+        <div class="border border-slate-200 rounded-lg p-3.5 text-xs bg-slate-50 space-y-1.5">
+          <div class="flex flex-wrap justify-between items-center gap-2">
+            <span class="font-extrabold text-sm text-blue-800">Order #${o.orderId}</span>
+            <select onchange="updateOrderStatus(${idx}, this.value)" class="border border-slate-300 rounded px-2 py-1 font-bold bg-white">
+              <option value="Confirmed" ${o.status === 'Confirmed' ? 'selected' : ''}>Confirmed</option>
+              <option value="Packed & Dispatched" ${o.status === 'Packed & Dispatched' ? 'selected' : ''}>Packed &amp; Dispatched</option>
+              <option value="Delivered" ${o.status === 'Delivered' ? 'selected' : ''}>Delivered</option>
+              <option value="Cancelled" ${o.status === 'Cancelled' ? 'selected' : ''}>Cancelled</option>
+            </select>
+          </div>
+          <p><strong>Customer:</strong> ${o.customerName} | <strong>Mobile:</strong> ${o.customerPhone}</p>
+          <p><strong>Address:</strong> ${o.address}</p>
+          <p><strong>Items:</strong> ${o.items.map(i => `${i.name} × ${i.qty} (₹${i.price * i.qty})`).join(", ")}</p>
+          <p class="font-bold text-slate-900">
+            Subtotal: ₹${o.subtotal} + Shipping: ₹${o.shipping} + COD Fee: ₹${o.codCharge} = Total: ₹${o.total} (${o.paymentMethod})
+          </p>
+        </div>
+      `).join("");
+    }
+
+    window.updateOrderStatus = function(index, newStatus) {
+      orders[index].status = newStatus;
+      localStorage.setItem("pf_orders", JSON.stringify(orders));
+    };
+
+    // Start Store
+    initStoreData();
+  </script>
+</body>
+</html>
